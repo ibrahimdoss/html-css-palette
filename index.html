@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://av01d.github.io/fontselect-jquery-plugin/jquery.fontselect.css"
+  />
+  <style>
+    body {
+      padding-top: 70px;
+      background-color: #2f75d0;
+      color: azure;
+    }
+    .font-select {
+      display: contents;
+    }
+  </style>
+  <head>
+    <title>Ödev</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <fieldset class="border p-2">
+                <legend class="w-auto h5">Yazı İşlemleri</legend>
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    <label for="YaziTipi">Yazı Tipi</label>
+                    <input id="YaziTipi" type="text" class="form-control" />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="FontSize">Font Boyutu</label>
+                    <form oninput="FontDegistir()">
+                      <input
+                        type="range"
+                        class="custom-range"
+                        min="12"
+                        max="70"
+                        step="1"
+                        value="12"
+                        id="FontSize"
+                      />
+                    </form>
+
+                    <small id="FontSizeHelpBlock" class="form-text">
+                      Geçerli Font Boyutu : 12
+                    </small>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="FontColor">Yazı Rengi</label>
+
+                    <form oninput="RenkDegistir()">
+                      <input type="color" class="form-control" id="FontColor" />
+                    </form>
+                    <small id="FontColorHelpBlock" class="form-text"> </small>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-12 pt-3">
+              <fieldset class="border p-2">
+                <legend class="w-auto h5">Border İşlemleri</legend>
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    <label for="BorderTipi">Border Tipi</label>
+                    <select
+                      class="form-control"
+                      onchange="BorderTipiDegistir(this.value)"
+                      id="YaziTipi"
+                    >
+                      <option selected value="none">Border Yok</option>
+                      <option value="dotted">dotted</option>
+                      <option value="dashed">dashed</option>
+                      <option value="solid">solid</option>
+                      <option value="double">double</option>
+                      <option value="groove">groove</option>
+                      <option value="ridge">ridge</option>
+                      <option value="inset">inset</option>
+                      <option value="outset">outset</option>
+                      <option value="hidden">hidden</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="BorderSize">Border Boyutu</label>
+
+                    <form oninput="BorderGenislikDegistir()">
+                      <input
+                        type="range"
+                        class="custom-range"
+                        min="0"
+                        max="10"
+                        step="1"
+                        value="1"
+                        id="BorderSize"
+                      />
+                    </form>
+
+                    <small id="BorderSizeHelpBlock" class="form-text">
+                      Geçerli Border Boyutu : 1
+                    </small>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="BorderColor">Border Rengi</label>
+
+                    <form oninput="BorderRenkDegistir()">
+                      <input
+                        type="color"
+                        class="form-control"
+                        id="BorderColor"
+                      />
+                    </form>
+                    <small id="BorderColorHelpBlock" class="form-text"> </small>
+                    <label for="ArkaplanColor">Arkaplan Rengi</label>
+
+                    <form oninput="ArkaPlanRenkDegistir()">
+                      <input
+                        type="color"
+                        class="form-control"
+                        id="ArkaplanColor"
+                      />
+                    </form>
+                    <small id="ArkaplanColorHelpBlock" class="form-text">
+                    </small>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <fieldset class="border p-2">
+                <legend class="w-auto h5">Orjinal İçerik</legend>
+                <textarea
+                  onkeyup="OrjinalTextArea(this.value)"
+                  class="form-control"
+                  name="Orjinal"
+                  id="Orjinal"
+                  rows="4"
+                ></textarea>
+              </fieldset>
+            </div>
+            <div class="col-12 pt-3">
+              <fieldset class="border p-2">
+                <legend class="w-auto h5">İçerik</legend>
+                <textarea
+                  class="form-control"
+                  readonly
+                  name="Icerik"
+                  id="Icerik"
+                  rows="4"
+                  style="border-style: none; border: 1px;"
+                ></textarea>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://av01d.github.io/fontselect-jquery-plugin/jquery.fontselect.js"></script>
+    <script>
+      function OrjinalTextArea(value) {
+        $("#Icerik").val(value);
+      }
+      function FontDegistir() {
+        FontSizeHelpBlock.innerHTML = "Geçerli Font Boyutu : " + FontSize.value;
+        $("#Icerik").css("font-size", FontSize.value + "px");
+      }
+      function RenkDegistir() {
+        FontColorHelpBlock.innerHTML = "Hex : " + FontColor.value;
+        $("#Icerik").css("color", FontColor.value);
+      }
+      function applyFont(font) {
+        console.log("You selected font: " + font);
+
+        // Replace + signs with spaces for css
+        font = font.replace(/\+/g, " ");
+
+        // Split font into family and weight/style
+        font = font.split(":");
+
+        var fontFamily = font[0];
+        var fontSpecs = font[1] || null;
+        var italic = false,
+          fontWeight = 400;
+
+        if (/italic/.test(fontSpecs)) {
+          italic = true;
+          fontSpecs = fontSpecs.replace("italic", "");
+        }
+        fontWeight = +fontSpecs;
+
+        // Set selected font on paragraphs
+        var css = {
+          fontFamily: "'" + fontFamily + "'",
+          fontWeight: fontWeight,
+          fontStyle: italic ? "italic" : "normal",
+        };
+        $("#Icerik").css(css);
+      }
+
+      function BorderGenislikDegistir() {
+        BorderSizeHelpBlock.innerHTML =
+          "Geçerli Border Boyutu : " + BorderSize.value;
+        $("#Icerik").css("border-width", BorderSize.value + "px");
+      }
+      function BorderTipiDegistir(value) {
+        $("#Icerik").css("border-style", value);
+      }
+      function BorderRenkDegistir() {
+        BorderColorHelpBlock.innerHTML = "Hex : " + BorderColor.value;
+        $("#Icerik").css("border-color", BorderColor.value);
+      }
+      function ArkaPlanRenkDegistir() {
+        ArkaplanColorHelpBlock.innerHTML = "Hex : " + ArkaplanColor.value;
+        $("#Icerik").css("background-color", ArkaplanColor.value);
+      }
+      $("#YaziTipi")
+        .fontselect({
+          systemFonts: false,
+          googleFonts: [
+            "Oswald:200,300,400,500,600,700",
+            "Krona+One:400",
+            "Poppins:100,100italic,200,200italic,300,300italic,400,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
+            "Roboto:100,100italic,300,300italic,400,italic,500,500italic,700,700italic,900,900italic",
+            "YellowTail:400",
+            "PT+Serif+Caption:400,italic",
+          ],
+          placeholder: "Lütfen Bir Font Seçiniz",
+          searchable: false,
+        })
+        .on("change", function () {
+          applyFont(this.value);
+        });
+    </script>
+  </body>
+</html>
